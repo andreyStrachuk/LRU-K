@@ -4,4 +4,4 @@ LRU-K evicts the page whose K-th most recent access is furthest in the past. For
 More information: [Wiki](https://en.wikipedia.org/wiki/Page_replacement_algorithm#Variants_on_LRU), [Scientific Article](https://www.cs.cmu.edu/~christos/courses/721-resources/p297-o_neil.pdf).
 ## Work example(LRU-1)
 The access sequence for the below example is A B C D E D F.  
-![Screen](https://github.com/SinySs/LRU-K/blob/18ed788c066a03219e6a58ec939fe6282ff38d6b/Theory/Lruexample.png)
+![Screen](https://github.com/SinySs/LRU-K/blob/37198750b18823b56ae9e0377da7ba8437556b63/Theory/Lruexample.png)
