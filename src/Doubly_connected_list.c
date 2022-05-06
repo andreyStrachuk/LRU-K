@@ -115,6 +115,8 @@ struct list_elem *push_before(struct List *list, struct list_elem *elem,
 }
 
 void delete_list(struct List *list) {
+  assert(list);
+
   struct list_elem *current = list->head;
 
   for (int i = 0; i < list->size - 1; i++) {
@@ -125,6 +127,7 @@ void delete_list(struct List *list) {
 }
 
 void delete_head(struct List *list) {
+  assert(list);
   list->head = list->head->next;
   free(list->head->prev);
 
@@ -132,6 +135,7 @@ void delete_head(struct List *list) {
 }
 
 void delete_tail(struct List *list) {
+  assert(list);
   list->tail = list->tail->prev;
   free(list->tail->next);
 
@@ -147,7 +151,6 @@ void delete_elem(struct List *list, struct list_elem *elem) {
   }
 
   if (elem == list->tail) {
-    printf("FFFF");
     return delete_tail(list);
   }
   elem->next->prev = elem->prev;
