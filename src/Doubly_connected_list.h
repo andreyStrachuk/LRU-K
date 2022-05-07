@@ -5,6 +5,11 @@
 #ifndef DOUBLY_CONNECTED_LIST_H_INCLUDED
 #define DOUBLY_CONNECTED_LIST_H_INCLUDED
 
+#include <assert.h>
+#include <malloc.h>
+#include <stdio.h>
+#include <stdlib.h>
+
 struct list_elem {
   int data;
 
@@ -34,5 +39,9 @@ struct list_elem *push_after(struct List *list, struct list_elem *elem,
 
 struct list_elem *push_before(struct List *list, struct list_elem *elem,
                               int data);
+
+void delete_list(struct List *list);
+
+int list_search (struct List *list, int data);
 
 #endif // DOUBLY_CONNECTED_LIST_H_INCLUDED
