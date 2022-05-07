@@ -99,6 +99,14 @@ int HashTableInit (struct HashTable *table, const int size) {
     return OK;
 }
 
+int SetStatus (struct hash_elem *el, Status st) {
+    assert (el);
+
+    el->status = st;
+
+    return OK;
+}
+
 int HashTableDestruct (struct HashTable *table) {
     assert (table);
 
@@ -147,16 +155,16 @@ int HashCRC32 (struct HashTable *table, void *val) {
     return crc % table->size; 
 }
 
-int main () {
-    struct HashTable *table = (struct HashTable *)calloc (1, sizeof (struct HashTable));
+// int main () {
+//     struct HashTable *table = (struct HashTable *)calloc (1, sizeof (struct HashTable));
 
-    HashTableInit (table, HASHTABLESIZE);
+//     HashTableInit (table, HASHTABLESIZE);
 
-    // HashTableInsert (table, 15);
+//     // HashTableInsert (table, 15);
 
-    HashTableDestruct (table);
+//     HashTableDestruct (table);
 
-    free (table);
+//     free (table);
 
-    return 0 ;
-}
+//     return 0 ;
+// }

@@ -60,5 +60,7 @@ int HashCRC32 (struct HashTable *table, void *val);
 
 int HashTableSearch (struct HashTable *table, int value);
 
+int SetStatus (struct hash_elem *el, Status st);
+
 
 #endif
