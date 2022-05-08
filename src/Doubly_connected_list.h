@@ -40,6 +40,10 @@ struct list_elem *push_after(struct List *list, struct list_elem *elem,
 struct list_elem *push_before(struct List *list, struct list_elem *elem,
                               int data);
 
+void delete_head(struct List *list);
+
+void delete_tail(struct List *list);
+
 void delete_list(struct List *list);
 
 int list_search (struct List *list, int data);

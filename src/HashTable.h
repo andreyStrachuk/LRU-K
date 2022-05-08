@@ -5,6 +5,8 @@
 #include <string.h>
 #include <ctype.h>
 
+#define K 3
+
 enum ERRORS {
     RECREATING_LIST,
     NULLPTR,
@@ -60,7 +62,11 @@ int hash_map_insert (struct hash_map *table, int value, int time, int status, st
 
 int SetStatus (struct hash_elem *el, int st);
 
-int check_in_hash_map (struct hash_map *table, int value);
+int check_if_in_hash_map (struct hash_map *table, int value);
+
+int change_history (struct List *list, int time, int k);
+
+int check_if_in_cache (struct List *cache, const int value);
 
 
 #endif

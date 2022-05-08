@@ -88,6 +88,14 @@ struct list_elem *push_after(struct List *list, struct list_elem *elem,
   return new_elem;
 }
 
+void delete_tail(struct List *list) {
+  assert(list);
+
+  list->tail = list->tail->prev;
+
+  free(list->tail->next);
+}
+
 struct list_elem *push_before(struct List *list, struct list_elem *elem,
                               int data) {
   assert(list);
@@ -125,14 +133,6 @@ void delete_head(struct List *list) {
   assert(list);
   list->head = list->head->next;
   free(list->head->prev);
-
-  list->size--;
-}
-
-void delete_tail(struct List *list) {
-  assert(list);
-  list->tail = list->tail->prev;
-  free(list->tail->next);
 
   list->size--;
 }

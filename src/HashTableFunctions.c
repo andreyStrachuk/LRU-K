@@ -42,7 +42,9 @@ int hash_map_insert (struct hash_map *table, int value, int time, int status, st
     }
 
     create_list (table->hash_table[value].history);
-    push_tail (table->hash_table[value].history, time);
+
+    change_history (table->hash_table[value].history, time, K);
+
     table->hash_table[value].status = status;
     table->hash_table->cache_elem = cache_elem;
     table->size++;
@@ -62,7 +64,7 @@ int hash_map_resize_up (struct hash_map *table) {
     return OK;
 }
 
-int check_in_hash_map (struct hash_map *table, int value) {
+int check_if_in_hash_map (struct hash_map *table, int value) {
     assert (table);
 
     if (value >= capacity) return OUT;
@@ -70,6 +72,35 @@ int check_in_hash_map (struct hash_map *table, int value) {
     if (table->hash_table[value].history->size == 0) return OUT;
 
     return IN;
+}
+
+int change_history (struct List *list, int time, int k) {
+    assert (list);
+
+    if (list->size == k) {
+        delete_tail (list);
+    }
+
+    push_head (list, time);
+
+    return OK;
+}
+
+int check_if_in_cache (struct List *cache, const int value) {
+    assert (cache);
+
+    struct list_elem *tmp_element = cache->head;
+    
+
+    for (int i = 0; i < cache->size; i++) {
+        if (tmp_element->data == value) {
+            return IN;
+        }
+
+        tmp_element = tmp_element->next;
+    }
+
+    return OUT;
 }
 
 int main () {
