@@ -66,7 +66,7 @@ int check_if_in_hash_map (struct hash_map *table, int value);
 
 int change_history (struct List *list, int time, int k);
 
-int check_if_in_cache (struct List *cache, const int value);
+int check_if_in_cache (struct hash_map *table, const int value);
 
 
 #endif

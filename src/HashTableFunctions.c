@@ -86,21 +86,10 @@ int change_history (struct List *list, int time, int k) {
     return OK;
 }
 
-int check_if_in_cache (struct List *cache, const int value) {
-    assert (cache);
+int check_if_in_cache (struct hash_map *table, const int value) {
+    assert (table);
 
-    struct list_elem *tmp_element = cache->head;
-    
-
-    for (int i = 0; i < cache->size; i++) {
-        if (tmp_element->data == value) {
-            return IN;
-        }
-
-        tmp_element = tmp_element->next;
-    }
-
-    return OUT;
+    return table->hash_table[value].status;
 }
 
 int main () {
