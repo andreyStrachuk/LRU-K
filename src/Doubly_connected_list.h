@@ -1,6 +1,6 @@
 /*!
-*This file contains a doubly linked list and functions for working with it.
-*/
+ *This file contains a doubly linked list and functions for working with it.
+ */
 
 #ifndef DOUBLY_CONNECTED_LIST_H_INCLUDED
 #define DOUBLY_CONNECTED_LIST_H_INCLUDED
@@ -39,6 +39,7 @@ struct list_elem *push_after(struct List *list, struct list_elem *elem,
 
 struct list_elem *push_before(struct List *list, struct list_elem *elem,
                               int data);
+void insert_head(struct List *list, struct list_elem *elem);
 
 void delete_head(struct List *list);
 
@@ -46,6 +47,6 @@ void delete_tail(struct List *list);
 
 void delete_list(struct List *list);
 
-int list_search (struct List *list, int data);
+int list_search(struct List *list, int data);
 
 #endif // DOUBLY_CONNECTED_LIST_H_INCLUDED
