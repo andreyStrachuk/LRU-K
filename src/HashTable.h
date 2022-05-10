@@ -23,7 +23,12 @@ enum ERRORS {
   NOARGUMENTS
 };
 
-enum Status { OUT, IN };
+
+enum Status {
+    OUT,
+    IN
+};
+
 
 struct hash_map {
   int capacity;
@@ -44,10 +49,13 @@ int hash_map_construct(struct hash_map *table, const int size);
 
 int hash_map_destruct(struct hash_map *table);
 
-int hash_map_resize_up(struct hash_map *table);
 
-int hash_map_insert(struct hash_map *table, int value, int time, int status,
-                    struct list_elem *cache_elem);
+int hash_map_resize_up_to_value (struct hash_map *table, const int value);
+
+int hash_map_insert (struct hash_map *table, int value, int time, int status, struct list_elem *cache_elem);
+
+int set_status (struct hash_map *table, const int value, const int st);
+
 
 int SetStatus(struct hash_elem *el, int st);
 
