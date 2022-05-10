@@ -24,8 +24,6 @@ enum ERRORS {
 };
 
 enum Status {
-    OFF,
-    ON, 
     OUT,
     IN
 };
@@ -58,9 +56,11 @@ int hash_map_destruct (struct hash_map *table);
 
 int hash_map_resize_up (struct hash_map *table);
 
+int hash_map_resize_up_to_value (struct hash_map *table, const int value);
+
 int hash_map_insert (struct hash_map *table, int value, int time, int status, struct list_elem *cache_elem);
 
-int SetStatus (struct hash_elem *el, int st);
+int set_status (struct hash_map *table, const int value, const int st);
 
 int check_if_in_hash_map (struct hash_map *table, int value);
 
