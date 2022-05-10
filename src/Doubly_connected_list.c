@@ -173,8 +173,8 @@ int list_search(struct List *list, int data) {
 
 void insert_head(struct List *list, struct list_elem *elem)
 {
-    assert(list);
-    assert(elem);
+  assert(list);
+  assert(elem);
 
     if(elem->data == list->head->data)
         return;

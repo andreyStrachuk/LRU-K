@@ -50,8 +50,7 @@ int hash_map_insert(struct hash_map *table, int value, int time, int status,
     if (value >= table->capacity) {
         hash_map_resize_up (table);
     }
-
-
+  table->hash_table[value].history = calloc(1, sizeof(struct List));
   create_list(table->hash_table[value].history);
 
   change_history(table->hash_table[value].history, time, K);
@@ -94,8 +93,8 @@ int check_if_in_hash_map (struct hash_map *table, int value) {
     assert (table);
 
 
-  if (value >= capacity)
-    return OUT;
+    if (value >= table->capacity)
+        return OUT;
 
 
     if (table->hash_table[value].history == NULL) return OUT;
@@ -125,7 +124,7 @@ int check_if_in_cache(struct hash_map *table, const int value) {
 
   return table->hash_table[value].status;
 }
-
+/*
 int main() {
   struct hash_map *table =
       (struct hash_map *)calloc(1, sizeof(struct hash_map));
@@ -137,4 +136,4 @@ int main() {
   free(table);
 
   return 0;
-}
+}*/

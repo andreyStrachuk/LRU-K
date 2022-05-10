@@ -6,7 +6,7 @@ struct list_elem *update_head(struct List *cache, struct hash_map *hash_table,
   new_elem = push_head(cache, page);
   if (cache->size > len_cache) {
 
-    hash_table->hash_table[cache->tail->data].status = OUT;
+    hash_table->hash_table[cache->tail->data].status = OUT; //!TO DO SetStatus
     delete_tail(cache);
   }
   return new_elem;
@@ -14,6 +14,7 @@ struct list_elem *update_head(struct List *cache, struct hash_map *hash_table,
 
 int LRU_step(struct List *cache, struct hash_map *hash_table, int page,
              int page_num, int len_cache) {
+
   if (check_if_in_hash_map(hash_table, page) == IN) {
     change_history(hash_table->hash_table[page].history, page_num, K);
     //! TO DO function update hash map:
@@ -28,8 +29,10 @@ int LRU_step(struct List *cache, struct hash_map *hash_table, int page,
       return 0;
     }
   } else {
-    hash_map_insert(hash_table, page, page_num, IN,
-                    update_head(cache, hash_table, page, len_cache));
+    printf("%d", cache->size);
+    struct list_elem *new_elem = update_head(cache, hash_table, page, len_cache);
+
+    hash_map_insert(hash_table, page, page_num, IN, new_elem);
     return 0;
   }
 
