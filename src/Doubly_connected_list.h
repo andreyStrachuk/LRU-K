@@ -39,6 +39,7 @@ struct list_elem *push_after(struct List *list, struct list_elem *elem,
 
 struct list_elem *push_before(struct List *list, struct list_elem *elem,
                               int data);
+void insert_head(struct List *list, struct list_elem *elem);
 
 void delete_head(struct List *list);
 

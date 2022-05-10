@@ -171,7 +171,22 @@ int list_search(struct List *list, int data) {
   return -1;
 }
 
-#ifdef Test
+void insert_head(struct List *list, struct list_elem *elem)
+{
+    assert(list);
+    assert(elem);
+
+    if(elem->data == list->head->data)
+        return;
+
+    elem->prev->next = elem->next;
+    elem->next->prev = elem->prev;
+
+    elem->prev = NULL;
+    elem->next = list->head;
+    list->head->prev = elem;
+    list->head = elem;
+}
 
 void print_list(struct List *list) {
   struct list_elem *current = list->head;
@@ -184,7 +199,7 @@ void print_list(struct List *list) {
 
   printf("\nEnd of printing list.\n");
 }
-
+#ifdef Test
  int main() {
    struct List new_list;
    struct list_elem *a;

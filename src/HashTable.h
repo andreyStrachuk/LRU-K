@@ -23,7 +23,7 @@ enum ERRORS {
   NOARGUMENTS
 };
 
-enum Status { OFF, ON, OUT, IN };
+enum Status { OUT, IN };
 
 struct hash_map {
   int capacity;
