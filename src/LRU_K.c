@@ -29,7 +29,6 @@ int LRU_step(struct List *cache, struct hash_map *hash_table, int page,
       return 0;
     }
   } else {
-    printf("%d", cache->size);
     struct list_elem *new_elem = update_head(cache, hash_table, page, len_cache);
 
     hash_map_insert(hash_table, page, page_num, IN, new_elem);

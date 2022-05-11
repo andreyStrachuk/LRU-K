@@ -50,13 +50,13 @@ int hash_map_insert(struct hash_map *table, int value, int time, int status,
     if (value >= table->capacity) {
         hash_map_resize_up (table);
     }
-  table->hash_table[value].history = calloc(1, sizeof(struct List));
-  create_list(table->hash_table[value].history);
+
+  table->hash_table[value].history = create_list();
 
   change_history(table->hash_table[value].history, time, K);
 
   table->hash_table[value].status = status;
-  table->hash_table->cache_elem = cache_elem;
+  table->hash_table[value].cache_elem = cache_elem;
   table->size++;
 
   return OK;
