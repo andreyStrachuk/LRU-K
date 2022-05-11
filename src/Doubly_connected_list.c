@@ -176,6 +176,32 @@ int list_search(struct List *list, int data) {
   return -1;
 }
 
+
+//! insert first elem from list before second
+void insert_elem(struct List *list, struct list_elem *first, struct list_elem *second)
+{
+    if(second->data == first->data)
+        return;
+
+    if(second->data == list->head->data) {
+        insert_head(list, first);
+        return;
+    }
+
+    if(first->data != list->tail->data) {
+        first->next->prev = first->prev;
+    } else {
+        list->tail = first->prev;
+    }
+
+    first->prev->next = first->next;
+
+    first->prev = second->prev;
+    first->next = second;
+    second->prev->next = first;
+    second->prev = first;
+}
+
 void insert_head(struct List *list, struct list_elem *elem)
 {
   assert(list);
@@ -184,8 +210,14 @@ void insert_head(struct List *list, struct list_elem *elem)
     if(elem->data == list->head->data)
         return;
 
-    elem->prev->next = elem->next;
-    elem->next->prev = elem->prev;
+    if(elem->data == list->tail->data) {
+        elem->prev->next = NULL;
+        list->tail = elem->prev;
+    } else {
+        elem->prev->next = elem->next;
+        elem->next->prev = elem->prev;
+    }
+
 
     elem->prev = NULL;
     elem->next = list->head;
@@ -204,6 +236,8 @@ void print_list(struct List *list) {
   }
 
   printf("\nEnd of printing list.\n");
+
+  printf("Head: %d Tail: %d\n", list->head->data, list->tail->data);
 }
 #ifdef Test
  int main() {
@@ -229,7 +263,9 @@ void print_list(struct List *list) {
 
    delete_tail(new_list);
    delete_tail(new_list);
-   delete_elem(new_list, c);
+   print_list(new_list);
+
+   insert_elem(new_list, b, a);
    print_list(new_list);
 
    delete_list(new_list);
