@@ -24,7 +24,7 @@ struct List {
   int size;
 };
 
-int create_list(struct List *list);
+struct List *create_list();
 
 struct list_elem *create_elem(int data);
 
@@ -48,5 +48,7 @@ void delete_tail(struct List *list);
 void delete_list(struct List *list);
 
 int list_search(struct List *list, int data);
+
+void print_list(struct List *list);
 
 #endif // DOUBLY_CONNECTED_LIST_H_INCLUDED
