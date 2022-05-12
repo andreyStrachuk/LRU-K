@@ -50,7 +50,8 @@ void delete_list(struct List *list);
 int list_search(struct List *list, int data);
 
 //! insert first elem from list before second
-void insert_elem(struct List *list, struct list_elem *first, struct list_elem *second);
+void insert_elem(struct List *list, struct list_elem *first,
+                 struct list_elem *second);
 
 void print_list(struct List *list);
 

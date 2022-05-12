@@ -90,13 +90,12 @@ struct list_elem *push_after(struct List *list, struct list_elem *elem,
 
 void delete_tail(struct List *list) {
   assert(list);
-  if(list->size > 1) {
+  if (list->size > 1) {
     list->tail = list->tail->prev;
     free(list->tail->next);
   } else {
     free(list->tail);
   }
-
 
   list->size--;
 }
@@ -104,9 +103,12 @@ void delete_tail(struct List *list) {
 struct list_elem *push_before(struct List *list, struct list_elem *elem,
                               int data) {
   assert(list);
-  assert(elem);
 
-  if (elem == list->head) {
+  if (list->size == 0) {
+    return first_push(list, data);
+  }
+
+  if (elem->data == list->head->data) {
     return push_head(list, data);
   }
 
@@ -176,53 +178,50 @@ int list_search(struct List *list, int data) {
   return -1;
 }
 
-
 //! insert first elem from list before second
-void insert_elem(struct List *list, struct list_elem *first, struct list_elem *second)
-{
-    if(second->data == first->data)
-        return;
+void insert_elem(struct List *list, struct list_elem *first,
+                 struct list_elem *second) {
+  if (second->data == first->data)
+    return;
 
-    if(second->data == list->head->data) {
-        insert_head(list, first);
-        return;
-    }
+  if (second->data == list->head->data) {
+    insert_head(list, first);
+    return;
+  }
 
-    if(first->data != list->tail->data) {
-        first->next->prev = first->prev;
-    } else {
-        list->tail = first->prev;
-    }
+  if (first->data != list->tail->data) {
+    first->next->prev = first->prev;
+  } else {
+    list->tail = first->prev;
+  }
 
-    first->prev->next = first->next;
+  first->prev->next = first->next;
 
-    first->prev = second->prev;
-    first->next = second;
-    second->prev->next = first;
-    second->prev = first;
+  first->prev = second->prev;
+  first->next = second;
+  second->prev->next = first;
+  second->prev = first;
 }
 
-void insert_head(struct List *list, struct list_elem *elem)
-{
+void insert_head(struct List *list, struct list_elem *elem) {
   assert(list);
   assert(elem);
 
-    if(elem->data == list->head->data)
-        return;
+  if (elem->data == list->head->data)
+    return;
 
-    if(elem->data == list->tail->data) {
-        elem->prev->next = NULL;
-        list->tail = elem->prev;
-    } else {
-        elem->prev->next = elem->next;
-        elem->next->prev = elem->prev;
-    }
+  if (elem->data == list->tail->data) {
+    elem->prev->next = NULL;
+    list->tail = elem->prev;
+  } else {
+    elem->prev->next = elem->next;
+    elem->next->prev = elem->prev;
+  }
 
-
-    elem->prev = NULL;
-    elem->next = list->head;
-    list->head->prev = elem;
-    list->head = elem;
+  elem->prev = NULL;
+  elem->next = list->head;
+  list->head->prev = elem;
+  list->head = elem;
 }
 
 void print_list(struct List *list) {
@@ -240,37 +239,37 @@ void print_list(struct List *list) {
   printf("Head: %d Tail: %d\n", list->head->data, list->tail->data);
 }
 #ifdef Test
- int main() {
-   struct List *new_list;
-   struct list_elem *a;
-   struct list_elem *b;
-   struct list_elem *c;
+int main() {
+  struct List *new_list;
+  struct list_elem *a;
+  struct list_elem *b;
+  struct list_elem *c;
 
-   new_list = create_list();
+  new_list = create_list();
 
-   a = push_head(new_list, 8);
-   push_head(new_list, 10);
-   push_tail(new_list, 2);
+  a = push_head(new_list, 8);
+  push_head(new_list, 10);
+  push_tail(new_list, 2);
 
-   b = push_after(new_list, a, 4);
-   push_after(new_list, new_list->tail, -1);
-   print_list(new_list);
+  b = push_after(new_list, a, 4);
+  push_after(new_list, new_list->tail, -1);
+  print_list(new_list);
 
-   push_before(new_list, b, 5);
-   push_before(new_list, new_list->head, 12);
-   c = push_head(new_list, 100);
-   print_list(new_list);
+  push_before(new_list, b, 5);
+  push_before(new_list, new_list->head, 12);
+  c = push_head(new_list, 100);
+  print_list(new_list);
 
-   delete_tail(new_list);
-   delete_tail(new_list);
-   print_list(new_list);
+  delete_tail(new_list);
+  delete_tail(new_list);
+  print_list(new_list);
 
-   insert_elem(new_list, b, a);
-   print_list(new_list);
+  insert_elem(new_list, b, a);
+  print_list(new_list);
 
-   delete_list(new_list);
+  delete_list(new_list);
 
-   return 0;
- }
+  return 0;
+}
 
 #endif // Test

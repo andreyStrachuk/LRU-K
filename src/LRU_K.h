@@ -4,7 +4,16 @@
 #include "Doubly_connected_list.h"
 #include "HashTable.h"
 
-int LRU_step(struct List *cache, struct hash_map *hash_table, int page,
+struct list_LRU {
+  struct List *list;
+  struct list_elem *inf;
+};
+
+int LRU_step(struct list_LRU *cache, struct hash_map *hash_table, int page,
              int page_num, int len_cache);
+
+struct list_LRU *create_list_LRU();
+
+void destruct_list_LRU(struct list_LRU *list);
 
 #endif // LRU_K_H_INCLUDED

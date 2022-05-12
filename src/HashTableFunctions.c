@@ -16,12 +16,10 @@ int hash_map_construct(struct hash_map *table, const int capacity) {
   return OK;
 }
 
+int SetStatus(struct hash_map *table, const int value, const int st) {
+  assert(value);
 
-int SetStatus (struct hash_map *table, const int value, const int st) {
-    assert (value);
-
-    table->hash_table[value].status = st;
-
+  table->hash_table[value].status = st;
 
   return OK;
 }
@@ -42,14 +40,13 @@ int hash_map_insert(struct hash_map *table, int value, int time, int status,
                     struct list_elem *cache_elem) {
   assert(table);
 
+  if (table->size == table->capacity - 1) {
+    hash_map_resize_up_to_value(table, value);
+  }
 
-    if (table->size == table->capacity - 1) {
-        hash_map_resize_up_to_value (table, value);
-    }
-
-    if (value >= table->capacity) {
-        hash_map_resize_up (table);
-    }
+  if (value >= table->capacity) {
+    hash_map_resize_up(table);
+  }
 
   table->hash_table[value].history = create_list();
 
@@ -76,33 +73,32 @@ int hash_map_resize_up(struct hash_map *table) {
   return OK;
 }
 
+int hash_map_resize_up_to_value(struct hash_map *table, const int value) {
+  assert(table);
 
-int hash_map_resize_up_to_value (struct hash_map *table, const int value) {
-    assert (table);
+  void *ptr = realloc(table->hash_table,
+                      table->capacity * 2 * sizeof(struct hash_elem *));
+  if (ptr == NULL)
+    return ALLOC_FAILED;
 
-    void *ptr = realloc (table->hash_table, table->capacity * 2 * sizeof (struct hash_elem *));
-    if (ptr == NULL) return ALLOC_FAILED;
+  table->hash_table = (struct hash_elem *)ptr;
+  table->capacity = value + 1;
 
-    table->hash_table = (struct hash_elem *)ptr;
-    table->capacity = value + 1;
-
-    return OK;
+  return OK;
 }
 
-int check_if_in_hash_map (struct hash_map *table, int value) {
-    assert (table);
+int check_if_in_hash_map(struct hash_map *table, int value) {
+  assert(table);
 
+  if (value >= table->capacity)
+    return OUT;
 
-    if (value >= table->capacity)
-        return OUT;
+  if (table->hash_table[value].history == NULL)
+    return OUT;
 
-
-    if (table->hash_table[value].history == NULL) return OUT;
-
-    if (table->hash_table[value].history->size == 0) {
-        return OUT;
-    }
-
+  if (table->hash_table[value].history->size == 0) {
+    return OUT;
+  }
 
   return IN;
 }
