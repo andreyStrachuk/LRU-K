@@ -8,18 +8,20 @@ int check_INF_status(struct hash_map *table, int page, int k) {
 }
 
 struct list_elem *push_elem_first(struct list_LRU *cache,
-                                  struct hash_map *hash_table, int page,
+                                  struct hash_map *table, int page,
                                   int len_cache) {
   struct list_elem *new_elem;
   if (cache->inf == NULL) {
     new_elem = push_tail(cache->list, page);
+  } else if(table->hash_table[cache->list->head->data].history->size == 1) {
+    new_elem = push_head(cache->list, page);
   } else {
     new_elem = push_before(cache->list, cache->inf, page);
   }
   cache->inf = new_elem;
 
   if (cache->list->size > len_cache) {
-    hash_table->hash_table[cache->list->tail->data].status = OUT;
+    table->hash_table[cache->list->tail->data].status = OUT;
     delete_tail(cache->list);
   }
 
