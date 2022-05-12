@@ -164,20 +164,6 @@ void delete_elem(struct List *list, struct list_elem *elem) {
   free(elem);
 }
 
-int list_search(struct List *list, int data) {
-  assert(list);
-
-  for (int i = 0; i < list->size; i++) {
-    if (list->head->data == data) {
-      return i;
-    }
-
-    list->head = list->head->next;
-  }
-
-  return -1;
-}
-
 //! insert first elem from list before second
 void insert_elem(struct List *list, struct list_elem *first,
                  struct list_elem *second) {
