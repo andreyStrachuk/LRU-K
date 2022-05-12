@@ -2,46 +2,41 @@
 
 const int capacity = 50;
 
-int hash_map_construct(struct hash_map *table, const int capacity) {
-  assert(table);
+int hash_map_construct (struct hash_map *table, const int capacity) {
+    assert (table);
 
-  table->capacity = capacity;
-  table->size = 0;
+    table->capacity = capacity;
+    table->size = 0;
 
-  table->hash_table =
-      (struct hash_elem *)calloc(capacity, sizeof(struct hash_elem));
-  if (table->hash_table == NULL)
-    return ALLOC_FAILED;
+    table->hash_table = (struct hash_elem *)calloc (capacity, sizeof (struct hash_elem));
+    if (table->hash_table == NULL) return ALLOC_FAILED;
 
-  return OK;
+    return OK;
 }
 
-
-int SetStatus (struct hash_map *table, const int value, const int st) {
+int set_status (struct hash_map *table, const int value, const int st) {
     assert (value);
 
     table->hash_table[value].status = st;
 
-
-  return OK;
+    return OK;
 }
 
-int hash_map_destruct(struct hash_map *table) {
-  assert(table);
+int hash_map_destruct (struct hash_map *table) {
+    assert (table);
 
-  for (int i = 0; i < table->size; i++) {
-    delete_list(table->hash_table[i].history);
-  }
+    for (int i = 0; i < table->size; i++) {
+        if (table->hash_table[i].history != NULL)
+            delete_list (table->hash_table[i].history);
+    }
 
-  free(table->hash_table);
+    free (table->hash_table);
 
-  return OK;
+    return OK;
 }
 
-int hash_map_insert(struct hash_map *table, int value, int time, int status,
-                    struct list_elem *cache_elem) {
-  assert(table);
-
+int hash_map_insert (struct hash_map *table, int value, int time, int status, struct list_elem *cache_elem) {
+    assert (table);
 
     if (table->size == table->capacity - 1) {
         hash_map_resize_up_to_value (table, value);
@@ -51,37 +46,38 @@ int hash_map_insert(struct hash_map *table, int value, int time, int status,
         hash_map_resize_up (table);
     }
 
+    void *ptr = calloc (1, sizeof (List));
+    if (ptr == NULL) return ALLOC_FAILED;
 
-  create_list(table->hash_table[value].history);
+    table->hash_table[value].history = (List *)ptr;
 
-  change_history(table->hash_table[value].history, time, K);
+    create_list (table->hash_table[value].history);
 
-  table->hash_table[value].status = status;
-  table->hash_table->cache_elem = cache_elem;
-  table->size++;
+    change_history (table->hash_table[value].history, time, K);
 
-  return OK;
+    table->hash_table[value].status = status;
+    table->hash_table[value].cache_elem = cache_elem;
+    table->size++;
+
+    return OK;
 }
 
-int hash_map_resize_up(struct hash_map *table) {
-  assert(table);
+int hash_map_resize_up (struct hash_map *table) {
+    assert (table);
 
-  void *ptr = realloc(table->hash_table,
-                      table->capacity * 2 * sizeof(struct hash_elem *));
-  if (ptr == NULL)
-    return ALLOC_FAILED;
+    void *ptr = realloc (table->hash_table, table->capacity * 2 * sizeof (struct hash_elem));
+    if (ptr == NULL) return ALLOC_FAILED;
 
-  table->hash_table = (struct hash_elem *)ptr;
-  table->capacity *= 2;
+    table->hash_table = (struct hash_elem *)ptr;
+    table->capacity *= 2;
 
-  return OK;
+    return OK;
 }
-
 
 int hash_map_resize_up_to_value (struct hash_map *table, const int value) {
     assert (table);
 
-    void *ptr = realloc (table->hash_table, table->capacity * 2 * sizeof (struct hash_elem *));
+    void *ptr = realloc (table->hash_table, table->capacity * 2 * sizeof (struct hash_elem));
     if (ptr == NULL) return ALLOC_FAILED;
 
     table->hash_table = (struct hash_elem *)ptr;
@@ -93,10 +89,7 @@ int hash_map_resize_up_to_value (struct hash_map *table, const int value) {
 int check_if_in_hash_map (struct hash_map *table, int value) {
     assert (table);
 
-
-  if (value >= capacity)
-    return OUT;
-
+    if (value >= capacity) return OUT;
 
     if (table->hash_table[value].history == NULL) return OUT;
 
@@ -104,37 +97,35 @@ int check_if_in_hash_map (struct hash_map *table, int value) {
         return OUT;
     }
 
-
-  return IN;
+    return IN;
 }
 
-int change_history(struct List *list, int time, int k) {
-  assert(list);
+int change_history (struct List *list, int time, int k) {
+    assert (list);
 
-  if (list->size == k) {
-    delete_tail(list);
-  }
+    if (list->size == k) {
+        delete_tail (list);
+    }
 
-  push_head(list, time);
+    push_head (list, time);
 
-  return OK;
+    return OK;
 }
 
-int check_if_in_cache(struct hash_map *table, const int value) {
-  assert(table);
+int check_if_in_cache (struct hash_map *table, const int value) {
+    assert (table);
 
-  return table->hash_table[value].status;
+    return table->hash_table[value].status;
 }
 
-int main() {
-  struct hash_map *table =
-      (struct hash_map *)calloc(1, sizeof(struct hash_map));
+int main () {
+    struct hash_map *table = (struct hash_map *)calloc (1, sizeof (struct hash_map));
 
-  hash_map_construct(table, capacity);
+    hash_map_construct (table, capacity);
 
-  hash_map_destruct(table);
+    hash_map_destruct (table);
 
-  free(table);
+    free (table);
 
-  return 0;
+    return 0 ;
 }

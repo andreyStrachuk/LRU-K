@@ -1,6 +1,6 @@
 #include "Doubly_connected_list.h"
 
-//#define Test
+#define Test
 
 int create_list(struct List *list) {
   assert(list);
@@ -90,10 +90,10 @@ struct list_elem *push_after(struct List *list, struct list_elem *elem,
 
 void delete_tail(struct List *list) {
   assert(list);
-  list->tail = list->tail->prev;
-  free(list->tail->next);
 
-  list->size--;
+  list->tail = list->tail->prev;
+
+  free(list->tail->next);
 }
 
 struct list_elem *push_before(struct List *list, struct list_elem *elem,
@@ -118,15 +118,15 @@ struct list_elem *push_before(struct List *list, struct list_elem *elem,
 }
 
 void delete_list(struct List *list) {
-  assert(list);
+    assert(list);
 
-  struct list_elem *current = list->head;
+    struct list_elem *current = list->head;
 
-  for (int i = 0; i < list->size - 1; i++) {
-    current = current->next;
-    free(current->prev);
-  }
-  free(current);
+    for (int i = 0; i < list->size - 1; i++) {
+      current = current->next;
+      free(current->prev);
+    }
+    free(current);
 }
 
 void delete_head(struct List *list) {
@@ -141,7 +141,7 @@ void delete_elem(struct List *list, struct list_elem *elem) {
   assert(list);
   assert(elem);
 
-  if (elem == list->head) {
+  if (elem == list->head) { 
     delete_head(list);
     return;
   }
@@ -157,36 +157,21 @@ void delete_elem(struct List *list, struct list_elem *elem) {
   free(elem);
 }
 
-int list_search(struct List *list, int data) {
-  assert(list);
+int list_search (struct List *list, int data) {
+    assert (list);
 
-  for (int i = 0; i < list->size; i++) {
-    if (list->head->data == data) {
-      return i;
+    for (int i = 0; i < list->size; i++) {
+        if (list->head->data == data) {
+          return i;
+        }
+
+        list->head = list->head->next;
     }
 
-    list->head = list->head->next;
-  }
-
-  return -1;
+    return -1;
 }
 
-void insert_head(struct List *list, struct list_elem *elem)
-{
-    assert(list);
-    assert(elem);
-
-    if(elem->data == list->head->data)
-        return;
-
-    elem->prev->next = elem->next;
-    elem->next->prev = elem->prev;
-
-    elem->prev = NULL;
-    elem->next = list->head;
-    list->head->prev = elem;
-    list->head = elem;
-}
+#ifdef Test
 
 void print_list(struct List *list) {
   struct list_elem *current = list->head;
@@ -199,36 +184,36 @@ void print_list(struct List *list) {
 
   printf("\nEnd of printing list.\n");
 }
-#ifdef Test
- int main() {
-   struct List new_list;
-   struct list_elem *a;
-   struct list_elem *b;
-   struct list_elem *c;
 
-   create_list(&new_list);
+// int main() {
+//   struct List new_list;
+//   struct list_elem *a;
+//   struct list_elem *b;
+//   struct list_elem *c;
 
-   a = push_head(&new_list, 8);
-   push_head(&new_list, 10);
-   push_tail(&new_list, 2);
+//   create_list(&new_list);
 
-   b = push_after(&new_list, a, 4);
-   push_after(&new_list, new_list.tail, -1);
-   print_list(&new_list);
+//   a = push_head(&new_list, 8);
+//   push_head(&new_list, 10);
+//   push_tail(&new_list, 2);
 
-   push_before(&new_list, b, 5);
-   push_before(&new_list, new_list.head, 12);
-   c = push_head(&new_list, 100);
-   print_list(&new_list);
+//   b = push_after(&new_list, a, 4);
+//   push_after(&new_list, new_list.tail, -1);
+//   print_list(&new_list);
 
-   delete_tail(&new_list);
-   delete_tail(&new_list);
-   delete_elem(&new_list, c);
-   print_list(&new_list);
+//   push_before(&new_list, b, 5);
+//   push_before(&new_list, new_list.head, 12);
+//   c = push_head(&new_list, 100);
+//   print_list(&new_list);
 
-   delete_list(&new_list);
+//   delete_tail(&new_list);
+//   delete_tail(&new_list);
+//   delete_elem(&new_list, c);
+//   print_list(&new_list);
 
-   return 0;
- }
+//   delete_list(&new_list);
+
+//   return 0;
+// }
 
 #endif // Test
