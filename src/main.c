@@ -23,7 +23,7 @@ int main() {
   len_hash_table = relative_hash_table_size * number_pages;
 
   cache = create_list_LRU();
-  hash_map_construct(table, 10);
+  hash_map_construct(table, len_hash_table);
   // printf("%d", hash_table.capacity);
 
   start = clock();

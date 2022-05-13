@@ -1,8 +1,8 @@
 #include "HashTable.h"
-const int capacity = 50;
 
 
-int hash_map_construct(struct hash_map *table, const int capacity) {
+
+int hash_map_construct(struct hash_map *table, int capacity) {
   assert(table);
 
   table->capacity = capacity;
