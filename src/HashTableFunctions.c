@@ -38,7 +38,7 @@ int hash_map_destruct(struct hash_map *table) {
 }
 
 int hash_map_insert(struct hash_map *table, int value, int time, int status,
-                    struct list_elem *cache_elem) {
+                    struct list_elem *cache_elem, int K) {
   assert(table);
 
   if (table->size == table->capacity - 1) {
@@ -78,7 +78,7 @@ int hash_map_resize_up_to_value(struct hash_map *table, const int value) {
   assert(table);
 
   void *ptr = realloc(table->hash_table,
-                      table->capacity * 2 * sizeof(struct hash_elem));
+                      table->capacity * 2 * sizeof(struct hash_elem *));
   if (ptr == NULL)
     return ALLOC_FAILED;
 

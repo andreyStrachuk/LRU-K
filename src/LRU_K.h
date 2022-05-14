@@ -8,7 +8,7 @@
 
 int read_number(int *number);
 
-int lru_k(int len_cache, int number_pages);
+int lru_k(int len_cache, int number_pages, int K);
 
 struct list_LRU {
   struct List *list;
@@ -16,7 +16,7 @@ struct list_LRU {
 };
 
 int LRU_step(struct list_LRU *cache, struct hash_map *hash_table, int page,
-             int page_num, int len_cache);
+             int page_num, int len_cache, int K);
 
 struct list_LRU *create_list_LRU();
 

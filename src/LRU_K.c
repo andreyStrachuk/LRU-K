@@ -63,14 +63,14 @@ struct list_elem *search_place(struct list_LRU *cache, struct hash_map *table,
 }
 
 int LRU_step(struct list_LRU *cache, struct hash_map *table, int page,
-             int page_num, int len_cache) {
+             int page_num, int len_cache, int K) {
   assert(cache);
   assert(table);
 
   if (check_if_in_hash_map(table, page) == OUT) {
 
     struct list_elem *new_elem = push_elem_first(cache, table, page, len_cache);
-    hash_map_insert(table, page, page_num, IN, new_elem);
+    hash_map_insert(table, page, page_num, IN, new_elem, K);
     return 0;
 
   } else {
@@ -132,7 +132,7 @@ int LRU_step(struct list_LRU *cache, struct hash_map *table, int page,
   return 0;
 }
 
-int lru_k(int len_cache, int number_pages) {
+int lru_k(int len_cache, int number_pages, int K) {
   int len_hash_table, page, hits;
   struct list_LRU *cache;
   struct hash_map *table =
@@ -147,7 +147,8 @@ int lru_k(int len_cache, int number_pages) {
   for (int count_pages = 0; count_pages < number_pages; count_pages++) {
     read_number(&page);
 
-    hits += LRU_step(cache, table, page, count_pages, len_cache);
+    hits += LRU_step(cache, table, page, count_pages, len_cache, K);
+    print_list(cache->list);
   }
 
   destruct_list_LRU(cache);
