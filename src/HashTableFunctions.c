@@ -8,9 +8,10 @@ int hash_map_construct(struct hash_map *table, const int capacity) {
   table->capacity = capacity;
   table->size = 0;
 
-  table->hash_table = (struct hash_elem *)calloc(capacity, sizeof(struct hash_elem));
+  table->hash_table =
+      (struct hash_elem *)calloc(capacity, sizeof(struct hash_elem));
   if (table->hash_table == NULL)
-        return ALLOC_FAILED;
+    return ALLOC_FAILED;
 
   return OK;
 }
@@ -37,15 +38,15 @@ int hash_map_destruct(struct hash_map *table) {
 }
 
 int hash_map_insert(struct hash_map *table, int value, int time, int status,
-                    struct list_elem *cache_elem) {
+                    struct list_elem *cache_elem, int K) {
   assert(table);
 
   if (table->size == table->capacity - 1) {
-    hash_map_resize_up_to_value(table, value);
+    hash_map_resize_up(table);
   }
 
   if (value >= table->capacity) {
-    hash_map_resize_up(table);
+    hash_map_resize_up_to_value(table, value);
   }
 
   table->hash_table[value].history = create_list();
@@ -77,6 +78,7 @@ int hash_map_resize_up_to_value(struct hash_map *table, const int value) {
   assert(table);
 
   table->capacity = value + 1;
+
   void *ptr = realloc(table->hash_table,
                       table->capacity * sizeof(struct hash_elem));
   if (ptr == NULL)
@@ -120,3 +122,4 @@ int check_if_in_cache(struct hash_map *table, const int value) {
 
   return table->hash_table[value].status;
 }
+
