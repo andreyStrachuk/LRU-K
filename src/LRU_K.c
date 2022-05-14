@@ -15,8 +15,10 @@ struct list_elem *push_elem_first(struct list_LRU *cache,
     new_elem = push_tail(cache->list, page);
   } else if(table->hash_table[cache->list->head->data].history->size == 1) {
     new_elem = push_head(cache->list, page);
+  } else if(cache->list->size < len_cache){
+    new_elem = push_tail(cache->list, page);
   } else {
-    new_elem = push_before(cache->list, cache->inf, page);
+      new_elem = push_before(cache->list, cache->inf, page);
   }
   cache->inf = new_elem;
 
