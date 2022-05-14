@@ -40,7 +40,7 @@ struct hash_elem {
   struct List *history;
 };
 
-int hash_map_construct(struct hash_map *table, int size);
+int hash_map_construct(struct hash_map *table, const int size);
 
 int hash_map_destruct(struct hash_map *table);
 

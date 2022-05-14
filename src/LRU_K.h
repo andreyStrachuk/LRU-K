@@ -4,6 +4,12 @@
 #include "Doubly_connected_list.h"
 #include "HashTable.h"
 
+#define relative_hash_table_size 0.1
+
+int lru_k();
+
+int read_number(int *number);
+
 struct list_LRU {
   struct List *list;
   struct list_elem *inf;
