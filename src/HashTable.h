@@ -5,7 +5,7 @@
 #include <ctype.h>
 #include <string.h>
 
-#define K 1
+#define K 2
 
 enum ERRORS {
   RECREATING_LIST,

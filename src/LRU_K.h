@@ -5,8 +5,8 @@
 #include "HashTable.h"
 
 struct list_LRU {
-  struct List *list;
-  struct list_elem *inf;
+    struct List *list;
+    struct list_elem *inf;
 };
 
 int LRU_step(struct list_LRU *cache, struct hash_map *hash_table, int page,
