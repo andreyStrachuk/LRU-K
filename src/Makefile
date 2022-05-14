@@ -1,3 +1,4 @@
+
 CC = gcc
 CFLAGS = -Wall -Wpedantic -Wextra -O2
 
@@ -7,3 +8,5 @@ name = hash
 
 all:
 	$(CC) $(CFLAGS) $(SRC) -o $(name)
+
+
