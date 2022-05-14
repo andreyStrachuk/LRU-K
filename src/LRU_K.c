@@ -38,7 +38,7 @@ struct list_LRU *create_list_LRU() {
 
 void destruct_list_LRU(struct list_LRU *list) {
   assert(list);
-  free(list->list);
+  delete_list(list->list);
   free(list);
 }
 
