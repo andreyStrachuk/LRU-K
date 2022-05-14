@@ -2,8 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "Doubly_connected_list.h "
-#include "HashTable.h"
 #include "LRU_K.h"
 
 #define relative_hash_table_size 0.1
