@@ -77,13 +77,15 @@ int hash_map_resize_up(struct hash_map *table) {
 int hash_map_resize_up_to_value(struct hash_map *table, const int value) {
   assert(table);
 
-  table->capacity = value + 1;
   void *ptr = realloc(table->hash_table,
-                      table->capacity * sizeof(struct hash_elem));
+                      table->capacity * 2 * sizeof(struct hash_elem *));
   if (ptr == NULL)
     return ALLOC_FAILED;
 
   table->hash_table = (struct hash_elem *)ptr;
+
+  table->capacity = value + 1;
+
 
   return OK;
 }
@@ -121,3 +123,4 @@ int check_if_in_cache(struct hash_map *table, const int value) {
 
   return table->hash_table[value].status;
 }
+
