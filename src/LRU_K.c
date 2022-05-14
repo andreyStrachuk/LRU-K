@@ -132,15 +132,13 @@ int LRU_step(struct list_LRU *cache, struct hash_map *table, int page,
   return 0;
 }
 
-int lru_k() {
-  int len_cache, len_hash_table, number_pages, page, hits;
+int lru_k(int len_cache, int number_pages) {
+  int len_hash_table, page, hits;
   struct list_LRU *cache;
   struct hash_map *table =
       (struct hash_map *)calloc(1, sizeof(struct hash_map));
   hits = 0;
 
-  read_number(&len_cache);
-  read_number(&number_pages);
   len_hash_table = relative_hash_table_size * number_pages;
 
   cache = create_list_LRU();
