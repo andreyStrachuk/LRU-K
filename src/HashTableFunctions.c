@@ -46,6 +46,7 @@ int hash_map_insert(struct hash_map *table, int value, int time, int status,
   }
 
   if (value >= table->capacity) {
+    printf ("HERE!!!\n");
     hash_map_resize_up_to_value(table, value);
   }
 
@@ -63,6 +64,8 @@ int hash_map_insert(struct hash_map *table, int value, int time, int status,
 int hash_map_resize_up(struct hash_map *table) {
   assert(table);
 
+  printf ("2\n");
+
   void *ptr = realloc(table->hash_table,
                       table->capacity * 2 * sizeof(struct hash_elem));
   if (ptr == NULL)
@@ -78,6 +81,8 @@ int hash_map_resize_up_to_value(struct hash_map *table, const int value) {
   assert(table);
 
   table->capacity = value + 1;
+
+  printf ("value\n");
 
   void *ptr = realloc(table->hash_table,
                       table->capacity * sizeof(struct hash_elem));
